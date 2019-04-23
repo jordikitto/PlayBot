@@ -1,0 +1,129 @@
+<html lang="en"><head>
+   <title>PlayBot Control</title>
+   <meta charset="utf-8">
+   <!--For mobile rendering properly-->
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!--Bootstrap necessary scripts-->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   <!-- Add icon library -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+   <!--Flask AJAX-->
+   <script type="text/javascript">
+        $SCRIPT_ROOT = "";
+        // State control
+        ON = "on"
+        OFF = "off"
+
+      // On page load
+        $(document).ready(function() {
+            function changePin(pinNum, state) {
+                $.ajax({
+                    url : '/ledAction?changePin='+pinNum+'&action='+state
+                });
+            }
+
+            // ----- LED CONTROL ---------
+            var LED_BTN = $('#led');
+            LED_BTN.on("touchstart mousedown", function(e) {
+                e.preventDefault();
+                changePin(23, ON);
+                LED_BTN.addClass("btn-light").removeClass("btn-dark");
+            });
+            LED_BTN.on("touchend mouseup", function(e) {
+                e.preventDefault();
+                changePin(23, OFF);
+                LED_BTN.addClass("btn-dark").removeClass("btn-light");
+            });
+            // ------ BUTTON CONTROLS ---------
+            var all_btns = $('#up_btn, #left_btn, #right_btn, #down_btn');
+            all_btns.on("touchstart mousedown", function(e) {
+                e.preventDefault();
+                changePin(23, ON);
+            });
+            all_btns.on("touchend mouseup", function(e) {
+                e.preventDefault();
+                changePin(23, OFF);
+            });
+        })
+   </script>
+   <style>
+      .btn {
+         height: 60px;
+         margin-top: 20px;
+      }
+   </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="d-sm-none d-md-block">
+            <h1 align="center">PlayBot Control</h1>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <iframe class="embed-responsive-item" src="http://172.19.23.144:8080/javascript_simple.html" frameborder="0" scrolling="no" allowfullscreen="">
+                    </iframe>
+                </div>
+                <!--<img src="/video_feed" class="img-responsive img-rounded" width="640">-->
+            </div>
+            <div class="col-sm">
+                <!--CONTROL BUTTONS-->
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col">
+                        <button id="up_btn" type="button" class="btn btn-primary btn-block">
+                            <i class="fa fa-lg fa-arrow-up" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button id="left_btn" type="button" class="btn btn-primary btn-block">
+                            <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <button id="right_btn" type="button" class="btn btn-primary btn-block">
+                            <i class="fa fa-lg fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col">
+                        <button id="down_btn" type="button" class="btn btn-primary btn-block">
+                            <i class="fa fa-lg fa-arrow-down" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <!--CONTROL BUTTONS-->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <!--LED BUTTONS-->
+            <button id="led" type="button" class="btn btn-block btn-dark">
+                <i class="fa fa-lg fa-lightbulb-o" aria-hidden="true"></i>
+            </button>
+            <!--LED BUTTONS-->
+        </div>
+        <div class="col-sm-8">
+            <!--SPEED CONTROL-->
+            <div class="btn-group btn-group-lg btn-block">
+                <button type="button" class="btn btn-primary">Slow</button>
+                <button type="button" class="btn btn-primary">Medium</button>
+                <button type="button" class="btn btn-primary">Fast</button>
+            </div>
+            <!--SPEED CONTROL-->
+        </div>
+    </div>
+
+</body></html>
