@@ -19,6 +19,8 @@ sudo crontab -e
 ```
 Add the line:
 ```
-@reboot sleep 30 && sudo python3 /home/pi/Desktop/web-server/app.py
+@reboot sleep 30 && sudo python3 /path/to/PlayBot/app.py
 ```
 5. Now when RPI is rebooted, you should recieve an email to the Pi's URL, and it will load web app and video stream
+
+*File paths should be full, e.g. /home/pi/Desktop/PlayBot*
