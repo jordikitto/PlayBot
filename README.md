@@ -8,7 +8,7 @@
 ```
 sudo nano /etc/rc.local
 ```
-Add the line:
+Add the line (replace /link/to/www):
 ```
 mjpg_streamer -o "output_http.so -w /link/to/www" -i "input_raspicam.so -fps 15 -vf"
 ```
@@ -17,8 +17,10 @@ mjpg_streamer -o "output_http.so -w /link/to/www" -i "input_raspicam.so -fps 15 
 ```
 sudo crontab -e
 ```
-Add the line:
+Add the line (replace /path/to/PlayBot/app.py):
 ```
-@reboot sleep 30 && sudo python3 /home/pi/Desktop/web-server/app.py
+@reboot sleep 30 && sudo python3 /path/to/PlayBot/app.py
 ```
 5. Now when RPI is rebooted, you should recieve an email to the Pi's URL, and it will load web app and video stream
+
+*File paths should be full, e.g. /home/pi/Desktop/PlayBot*
