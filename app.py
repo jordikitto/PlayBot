@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 from send_email import Emailer
 from pi_command import get_ip_address
 from flask import Flask, render_template, request
+import playbot_drive as drive
 app = Flask(__name__)
 
 GPIO.setmode(GPIO.BCM) # Use BCM Mode
@@ -27,6 +28,7 @@ def main():
       'pins' : pins
       }
    # Pass the template data into the template main.html and return it to the user
+   ip_address = get_ip_address()
    return render_template('main.html', **templateData, ip=ip_address)
 
 # The function below is executed when someone requests a URL with the pin number and action in it:
@@ -59,10 +61,40 @@ def action():
 
    return render_template('main.html', **templateData)
 
+# Send the robot forward
+@app.route("/forward")
+def forward():
+   drive.forward()
+   return render_template('main.html')
+
+# Send the robot backward
+@app.route("/backward")
+def backward():
+   drive.backward()
+   return render_template('main.html')
+
+# Send the robot turn_right
+@app.route("/turn_right")
+def turn_right():
+   drive.turn_right()
+   return render_template('main.html')
+
+# Send the robot turn_left
+@app.route("/turn_left")
+def turn_left():
+   drive.turn_left()
+   return render_template('main.html')
+
+# Send the robot stop
+@app.route("/stop")
+def stop():
+   drive.stop()
+   return render_template('main.html')
+
 if __name__ == "__main__":
    # Email IP address
    print("Mailing IP")
    mail = Emailer()
    mail.send_ip()
    # Start web app
-   app.run(host=ip_address, port=80, debug=False, threaded=True)
+   app.run(host=ip_address, port=80, debug=True, threaded=True)

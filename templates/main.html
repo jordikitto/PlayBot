@@ -25,6 +25,39 @@
                     url : '/ledAction?changePin='+pinNum+'&action='+state
                 });
             }
+            // ------ ROBOT CONTROL -----
+            function robot_forward() {
+                $.ajax({
+                    url : '/forward'
+                });
+            }
+
+            function robot_backward() {
+                $.ajax({
+                    url : '/backward'
+                });
+            }
+
+            function robot_turn_right() {
+                $.ajax({
+                    url : '/turn_right'
+                });
+            }
+
+            function robot_turn_left() {
+                $.ajax({
+                    url : '/turn_left'
+                });
+            }
+
+            function robot_stop() {
+                $.ajax({
+                    url : '/stop'
+                });
+            }
+
+            // Call stop at the start just incase
+            robot_stop();
 
             // ----- LED CONTROL ---------
             var LED_BTN = $('#led');
@@ -40,14 +73,31 @@
             });
             // ------ BUTTON CONTROLS ---------
             var all_btns = $('#up_btn, #left_btn, #right_btn, #down_btn');
-            all_btns.on("touchstart mousedown", function(e) {
-                e.preventDefault();
-                changePin(23, ON);
-            });
             all_btns.on("touchend mouseup", function(e) {
                 e.preventDefault();
-                changePin(23, OFF);
+                robot_stop();
             });
+            
+            $('#up_btn').on("touchstart mousedown", function(e) {
+                e.preventDefault();
+                robot_forward();
+            });
+
+            $('#down_btn').on("touchstart mousedown", function(e) {
+                e.preventDefault();
+                robot_backward();
+            });
+
+            $('#left_btn').on("touchstart mousedown", function(e) {
+                e.preventDefault();
+                robot_turn_left();
+            });
+
+            $('#right_btn').on("touchstart mousedown", function(e) {
+                e.preventDefault();
+                robot_turn_right();
+            });
+            
         })
    </script>
    <style>
@@ -65,7 +115,7 @@
         <div class="row">
             <div class="col-sm">
                 <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="http://172.19.23.144:8080/javascript_simple.html" frameborder="0" scrolling="no" allowfullscreen="">
+                    <iframe class="embed-responsive-item" src="http://{{ip}}:8080/javascript_simple.html" frameborder="0" scrolling="no" allowfullscreen="">
                     </iframe>
                 </div>
                 <!--<img src="/video_feed" class="img-responsive img-rounded" width="640">-->
