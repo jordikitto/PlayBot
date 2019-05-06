@@ -4,7 +4,7 @@ import RPi.GPIO as GPIO
 
 mode=GPIO.getmode()
 
-GPIO.cleanup()
+GPIO.setwarnings(False)
 
 Forward_left=26
 Backward_left=21
