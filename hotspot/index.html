@@ -3,33 +3,81 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<script src="jquery-3.4.1.min.js"></script>
 
 	<style>
 	body {
 	    margin: 20px;
 	}
 	</style>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+		var username_field = $('#input_username');
+		var uni_checkbox = $('#checkbox_uni');
+
+		// Toggle to hide username field on load
+		username_field.toggle(uni_checkbox.checked);	
+		uni_checkbox.click(function() {
+			username_field.toggle(uni_checkbox.checked);	
+		})
+	})
+	</script>
+
     </head>
 <body>
 
 <div class="container"> 
 	<div class="row">
 		<div class="col-sm">
-		<h1>PlayBot Setup</h1>
-<p>Fill in the following details to connect PlayBot to your home Wifi!</p>
-<p>Upon submission, PlayBot will disconnect and try reconnect to the given wifi details.</p>
+			<h1>PlayBot Setup</h1>
+			<p>Fill in the following details to connect PlayBot to your home Wifi!</p>
+			<p>Upon submission, PlayBot will disconnect and try reconnect to the given wifi details.</p>
 		</div>
 		<div class="col-sm">
-		<div class="form-group">
-		    <label for="usr">WiFi Name:</label>
-		    <input type="text" class="form-control" id="ssid">
-		</div>
-		<div class="form-group">
-		    <label for="pwd">Password:</label>
-		    <input type="password" class="form-control" id="pwd">
-		</div>
+			<div class="form-group">
+				<label for="usr">WiFi Name:</label>
+				<input type="text" class="form-control" id="ssid">
+			</div>
+			<div class="form-check">
+				<label class="form-check-label">
+				  <input id="checkbox_uni" type="checkbox" class="form-check-input" value="">University Network
+				</label>
+			</div>
+			<div id="input_username" class="form-group">
+				<label for="usr">Username:</label>
+				<input type="text" class="form-control" id="username">
+			</div>
+			<div class="form-group">
+				<label for="pwd">Password:</label>
+				<input type="password" class="form-control" id="pwd">
+			</div>
 		<button type="submit" class="btn btn-primary btn-block">Submit</button>
+		</div>
+	</div>
+	<br>
+	<hr>
+	<br>
+	<div class="row">
+		<div class="col-sm">
+			<h2>User Email</h2>
+			<p>When connected to wifi, the PlayBot will send you an email with instruction to access control web app.</p>
+			<p>Here you can set the email account you would like to use to send and recieve this email.</p>
+		</div>
+		<div class="col-sm">
+			<div class="form-group">
+				<label for="email">Email Address:</label>
+				<input type="text" class="form-control" id="email">
+			</div>
+			<div class="form-group">
+				<label for="pwd">Password:</label>
+				<input type="password" class="form-control" id="email_pwd">
+			</div>
+			<button type="submit" class="btn btn-primary btn-block">Save</button>
+			<div class="alert alert-info">
+				<strong>Note:</strong> these details only need to be set once, but can be changed later.
+			</div>
 		</div>
 	</div>
 </div>
