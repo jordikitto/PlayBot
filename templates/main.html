@@ -132,7 +132,7 @@
                 speed_fast();
             });
 
-            $("div.btn-group button.btn").click(function(){
+            $("div.btn-group button.btn").on("touchend mouseup", function(){
                 $("div.btn-group").find(".active").removeClass("active");
                 $(this).addClass("active");
             });
@@ -146,6 +146,9 @@
       .btn {
          height: 60px;
          margin-top: 20px;
+      }
+      .fa-bullseye {
+          color: red;
       }
    </style>
 </head>
@@ -179,7 +182,13 @@
                             <i class="fa fa-lg fa-arrow-left" aria-hidden="true"></i>
                         </button>
                     </div>
-                    <div class="col"></div>
+                    <div class="col">
+                        <!--LED BUTTONS-->
+                        <button id="led" type="button" class="btn btn-block btn-dark">
+                            <i class="fa fa-2x fa-bullseye" aria-hidden="true"></i>
+                        </button>
+                        <!--LED BUTTONS-->
+                    </div>
                     <div class="col">
                         <button id="right_btn" type="button" class="btn btn-primary btn-block">
                             <i class="fa fa-lg fa-arrow-right" aria-hidden="true"></i>
@@ -196,26 +205,18 @@
                     <div class="col"></div>
                 </div>
                 <!--CONTROL BUTTONS-->
+                <div class="row">
+                    <div class="col">
+                        <!--SPEED CONTROL-->
+                        <div class="btn-group btn-group-lg btn-block">
+                            <button id="btn_slow" type="button" class="btn btn-primary">Slow</button>
+                            <button id="btn_med" type="button" class="btn btn-primary active">Medium</button>
+                            <button id="btn_fast" type="button" class="btn btn-primary">Fast</button>
+                        </div>
+                        <!--SPEED CONTROL-->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <!--LED BUTTONS-->
-            <button id="led" type="button" class="btn btn-block btn-dark">
-                <i class="fa fa-lg fa-lightbulb-o" aria-hidden="true"></i>
-            </button>
-            <!--LED BUTTONS-->
-        </div>
-        <div class="col-sm-8">
-            <!--SPEED CONTROL-->
-            <div class="btn-group btn-group-lg btn-block">
-                <button id="btn_slow" type="button" class="btn btn-primary">Slow</button>
-                <button id="btn_med" type="button" class="btn btn-primary active">Medium</button>
-                <button id="btn_fast" type="button" class="btn btn-primary">Fast</button>
-            </div>
-            <!--SPEED CONTROL-->
-        </div>
-    </div>
-
 </body></html>
