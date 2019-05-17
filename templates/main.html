@@ -56,6 +56,24 @@
                 });
             }
 
+            function speed_slow() {
+                $.ajax({
+                    url : '/speed_slow'
+                });
+            }
+
+            function speed_med() {
+                $.ajax({
+                    url : '/speed_med'
+                });
+            }
+
+            function speed_fast() {
+                $.ajax({
+                    url : '/speed_fast'
+                });
+            }
+
             // Call stop at the start just incase
             robot_stop();
 
@@ -97,6 +115,30 @@
                 e.preventDefault();
                 robot_turn_right();
             });
+
+            // ------SPEED CONTROLS -----------------
+            $('#btn_slow').on("touchstart mousedown", function(e) {
+                e.preventDefault();
+                speed_slow();
+            });
+
+            $('#btn_med').on("touchstart mousedown", function(e) {
+                e.preventDefault();
+                speed_med();
+            });
+
+            $('#btn_fast').on("touchstart mousedown", function(e) {
+                e.preventDefault();
+                speed_fast();
+            });
+
+            $("div.btn-group button.btn").click(function(){
+                $("div.btn-group").find(".active").removeClass("active");
+                $(this).addClass("active");
+            });
+
+            // Set speed to medium on page load
+            speed_med();
             
         })
    </script>
@@ -168,9 +210,9 @@
         <div class="col-sm-8">
             <!--SPEED CONTROL-->
             <div class="btn-group btn-group-lg btn-block">
-                <button type="button" class="btn btn-primary">Slow</button>
-                <button type="button" class="btn btn-primary">Medium</button>
-                <button type="button" class="btn btn-primary">Fast</button>
+                <button id="btn_slow" type="button" class="btn btn-primary">Slow</button>
+                <button id="btn_med" type="button" class="btn btn-primary active">Medium</button>
+                <button id="btn_fast" type="button" class="btn btn-primary">Fast</button>
             </div>
             <!--SPEED CONTROL-->
         </div>

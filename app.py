@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import RPi.GPIO as GPIO
 from send_email import Emailer
 from pi_command import get_ip_address
@@ -89,6 +91,24 @@ def turn_left():
 @app.route("/stop")
 def stop():
    drive.stop()
+   return render_template('main.html')
+
+# Set speed to fast
+@app.route("/speed_fast")
+def speed_fast():
+   drive.set_speed_fast()
+   return render_template('main.html')
+
+# Set speed to med
+@app.route("/speed_med")
+def speed_med():
+   drive.set_speed_med()
+   return render_template('main.html')
+
+# Set speed to slow
+@app.route("/speed_slow")
+def speed_slow():
+   drive.set_speed_slow()
    return render_template('main.html')
 
 if __name__ == "__main__":
