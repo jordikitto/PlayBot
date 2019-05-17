@@ -2,7 +2,7 @@
 * Streamer used: [mjpeg-streamer](https://github.com/jacksonliam/mjpg-streamer/tree/master/mjpg-streamer-experimental)
 * Backend used: [Python Flask](http://flask.pocoo.org)
 
-# Setup
+# Setup (outdated)
 1. Install MJPEG-Streamer and copy javascript-simple.html to www/ file (new file has responsive bootstrap code)
 2. Setup MJPEG-Streamer to start on startup, in terminal:
 ```
