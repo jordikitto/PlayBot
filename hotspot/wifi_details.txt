@@ -1,3 +1,0 @@
-test,,,test
-hello,1,jordi,kitto
-None,,,None

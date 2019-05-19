@@ -1,12 +1,14 @@
-import smtplib, ssl
+import smtplib, ssl, csv
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from pi_command import get_ip_address
 
 class Emailer():
-    def __init__(self, sender_email="jordikitto@gmail.com", password="kqagpbhnpgbrbkbe", receiver_email="jordikitto@gmail.com"):
-        self.__sender_email = sender_email
-        self.__receiver_email = receiver_email
+    def __init__(self):
+        # Get email from file
+        email, password = self.get_details_from_file()
+        self.__sender_email = email
+        self.__receiver_email = email
         self.__password = password
         self.__port = 465  # For SSL
         self.__smtp_server = "smtp.gmail.com"
@@ -52,3 +54,12 @@ class Emailer():
         """
         subject = "PlayBot Address: "+ip_address
         self.send_html(subject, text, html)
+    
+    def get_details_from_file(self):
+        with open("/home/pi/Desktop/PlayBot/hotspot/email_details.txt") as email_file:
+            csv_email = csv.reader(email_file)
+            for details in csv_email:
+                email = details[0]
+                password = details[1]
+
+            return email, password

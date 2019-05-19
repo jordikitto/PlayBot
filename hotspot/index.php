@@ -1,5 +1,4 @@
 <?php 
-
 // Handle wifi submission details
 if(isset($_POST["submit-wifi"])) {
 	$ssid = $_POST["ssid"];
@@ -15,6 +14,9 @@ if(isset($_POST["submit-wifi"])) {
 		'password'	=> $password
 	);
 	fputcsv($file, $wifi_details);
+
+	$command = escapeshellcmd('sudo python3 /home/pi/Desktop/PlayBot/hotspot/update_details.py');
+    $output = shell_exec($command);
 }
 
 // Handle email submission details
@@ -22,13 +24,19 @@ if(isset($_POST["submit-email"])) {
 	$email = $_POST["email"];
 	$password = $_POST["email_pwd"];
 
-	$file = fopen("email_details.txt", 'w');
-	$email_details = array(
-		'email' 	=> 	$email,
-		'password'	=> $password
-	);
-	fputcsv($file, $email_details);
+	// Check details aren't empty
+	if (!empty($email) && !empty($password)) {
+		$file = fopen("email_details.txt", 'w');
+		$email_details = array(
+			'email' 	=> 	$email,
+			'password'	=> $password
+		);
+		fputcsv($file, $email_details);
+	}
 }
+
+// Set if email details exist
+$email_details_exist = file_exists("/home/pi/Desktop/PlayBot/hotspot/email_details.txt");
 
 ?>
 
@@ -54,7 +62,7 @@ if(isset($_POST["submit-email"])) {
 
 		// Toggle to hide username field on load
 		username_field.toggle(uni_checkbox.checked);	
-		uni_checkbox.click(function() {
+		uni_checkbox.change(function() {
 			username_field.toggle(uni_checkbox.checked);	
 			if (uni_checkbox.val() == "0") {
 				uni_checkbox.val("1");
@@ -62,6 +70,17 @@ if(isset($_POST["submit-email"])) {
 				uni_checkbox.val("0");
 			}
 			
+		})
+
+		// Show message on wifi details submit
+		submit_wifi = $('#submit-wifi');
+		submit_success = $('#submit-success');
+		// Hide on startup
+		submit_success.hide();
+		submit_wifi.on("touchend mouseup", function() {
+			if (!submit_wifi.is("disabled")) {
+				submit_success.show();
+			}
 		})
 	})
 	</script>
@@ -80,11 +99,12 @@ if(isset($_POST["submit-email"])) {
 			<form method="POST">
 				<div class="form-group">
 					<label for="usr">WiFi Name:</label>
-					<input type="text" class="form-control" name="ssid">
+					<input type="text" class="form-control" name="ssid" <?php if (!$email_details_exist) { echo "disabled"; } ?>>
 				</div>
 				<div class="form-check">
 					<label class="form-check-label">
-					<input name="checkbox_uni" id="checkbox_uni" type="checkbox" class="form-check-input" value="0">University Network
+					<input name="checkbox_uni" id="checkbox_uni" type="checkbox" class="form-check-input" value="0" <?php if (!$email_details_exist) { echo "disabled"; } ?>>
+					University Network
 					</label>
 				</div>
 				<div id="input_username" class="form-group">
@@ -93,9 +113,15 @@ if(isset($_POST["submit-email"])) {
 				</div>
 				<div class="form-group">
 					<label for="pwd">Password:</label>
-					<input type="password" class="form-control" name="pwd">
+					<input type="password" class="form-control" name="pwd" <?php if (!$email_details_exist) { echo "disabled"; } ?>>
 				</div>
-				<button name="submit-wifi" type="submit" class="btn btn-primary btn-block">Submit</button>
+				<button id="submit-wifi" name="submit-wifi" type="submit" class="btn btn-primary btn-block" <?php if (!$email_details_exist) { echo "disabled"; } ?>>
+				Submit
+				</button>
+				<div id="submit-success" class="alert alert-success">
+					<strong>Submitted:</strong> Please wait, if successful submission then window will close automatically. 
+					Afterwards, connect to Wifi and await email.
+				</div>
 			</form>
 		</div>
 	</div>
@@ -112,15 +138,15 @@ if(isset($_POST["submit-email"])) {
 			<form method="POST">	
 				<div class="form-group">
 					<label for="email">Email Address:</label>
-					<input type="text" class="form-control" name="email">
+					<input type="text" class="form-control" name="email" required>
 				</div>
 				<div class="form-group">
 					<label for="pwd">Password:</label>
-					<input type="password" class="form-control" name="email_pwd">
+					<input type="password" class="form-control" name="email_pwd" required>
 				</div>
 				<button name="submit-email" type="submit" class="btn btn-primary btn-block">Save</button>
 				<div class="alert alert-info">
-					<strong>Note:</strong> these details only need to be set once, but can be changed later.
+					<strong>Note:</strong> These details only need to be set once, but can be changed later.
 				</div>
 			</form>
 		</div>
