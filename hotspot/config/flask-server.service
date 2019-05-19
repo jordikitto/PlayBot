@@ -1,0 +1,10 @@
+[Unit]
+Description=The PlayBot control python Flask server
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/pi/Desktop/PlayBot/app.py
+
+[Install]
+WantedBy=multi-user.target

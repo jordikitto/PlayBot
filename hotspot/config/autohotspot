@@ -34,10 +34,9 @@ ssidsmac=("${ssids[@]}" "${mac[@]}") #combines ssid and MAC for checking
 
 createAdHocNetwork()
 {
-    echo "Shutting down python app(s)"
-    pkill python
+    echo "Shutting down flask server"
+    sudo systemctl stop flask-server
     echo "Creating Hotspot"
-    # Shutdown python flask server (all python processes)
     ip link set dev "$wifidev" down
     ip a add 10.0.0.5/24 brd + dev "$wifidev"
     ip link set dev "$wifidev" up
@@ -48,9 +47,9 @@ createAdHocNetwork()
     systemctl start hostapd
     # Start nginx captive portal server
     systemctl start nginx
-    sleep 5
-    echo "Bug fix: networking restart"
-    service networking restart # bug fix
+    #sleep 5
+    #echo "Bug fix: networking restart"
+    #service networking restart # bug fix
     
 }
 
@@ -70,18 +69,17 @@ KillHotspot()
 ChkWifiUp()
 {
 	echo "Checking WiFi connection ok"
-	sleep 5
-	echo "Bug fix: networking, dhcpcd restart"
-	service networking restart
-	systemctl restart dhcpcd
-        sleep 20 #give time for connection to be completed to router
-	echo "Starting Flask server"
-	python3 /home/pi/Desktop/PlayBot/app.py &
-	disown # disconnect pi thread
+	#sleep 5
+	#echo "Bug fix: networking, dhcpcd restart"
+	#service networking restart
+	#systemctl restart dhcpcd
+       echo "Starting Flask server"
+	sudo systemctl start flask-server
+       sleep 20 #give time for connection to be completed to router
 	if ! wpa_cli -i "$wifidev" status | grep 'ip_address' >/dev/null 2>&1
         then #Failed to connect to wifi (check your wifi settings, password etc)
 	       echo 'Wifi failed to connect, falling back to Hotspot.'
-               wpa_cli terminate "$wifidev" >/dev/null 2>&1
+              wpa_cli terminate "$wifidev" >/dev/null 2>&1
 	       createAdHocNetwork
 	fi
 }
