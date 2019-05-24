@@ -12,7 +12,9 @@ network={{
     key_mgmt=WPA-PSK
 }}\n\n'''
 
-entry_wifi_uni = '''network={{
+entry_wifi_uni = '''ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+country=AU
+network={{
     ssid="{0}"
     scan_ssid=1
     key_mgmt=WPA-EAP

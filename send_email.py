@@ -31,7 +31,16 @@ class Emailer():
         # The email client will try to render the last part first
         message.attach(part1)
         message.attach(part2)
-        self.send(message.as_string())
+
+        # Try send
+        sent = False
+
+        while not sent:
+            try:
+                self.send(message.as_string())
+                sent = True
+            except:
+                print("Email send error, attempting again...")
 
     def send_ip(self):
         """Send IP address email to reciever email"""

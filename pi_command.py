@@ -10,7 +10,8 @@ def get_ip_address():
         ip_address = re.findall(ip_pattern, ip_address)
         try:
             ip_address = str(ip_address[0])
-            found = True
+            if (len(ip_address) > 0):
+                found = True
         except:
             print("No IP address, searching again") 
     return ip_address
