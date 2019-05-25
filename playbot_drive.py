@@ -70,3 +70,20 @@ def set_speed_med():
 def set_speed_fast():
     global speed
     speed = speed_high
+
+# ---- Shoot stuff
+shooter_a = 19
+shooter_b = 13
+
+GPIO.setup(shooter_a, GPIO.OUT)
+GPIO.setup(shooter_b, GPIO.OUT)
+
+def shoot_on():
+    GPIO.output(shooter_b, GPIO.HIGH)
+    GPIO.output(shooter_a, GPIO.LOW)
+    time.sleep(0.98)
+    shoot_off()
+
+def shoot_off():
+    GPIO.output(shooter_b, GPIO.LOW)
+    GPIO.output(shooter_a, GPIO.LOW)

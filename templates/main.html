@@ -74,21 +74,33 @@
                 });
             }
 
+            function shoot_on() {
+                $.ajax({
+                    url : '/shoot_on'
+                });
+            }
+
+            function shoot_off() {
+                $.ajax({
+                    url : '/shoot_off'
+                });
+            }
+
             // Call stop at the start just incase
             robot_stop();
 
-            // ----- LED CONTROL ---------
-            var LED_BTN = $('#led');
-            LED_BTN.on("touchstart mousedown", function(e) {
-                e.preventDefault();
-                changePin(23, ON);
-                LED_BTN.addClass("btn-light").removeClass("btn-dark");
-            });
-            LED_BTN.on("touchend mouseup", function(e) {
-                e.preventDefault();
-                changePin(23, OFF);
-                LED_BTN.addClass("btn-dark").removeClass("btn-light");
-            });
+            // // ----- LED CONTROL ---------
+            // var LED_BTN = $('#led');
+            // LED_BTN.on("touchstart mousedown", function(e) {
+            //     e.preventDefault();
+            //     changePin(23, ON);
+            //     LED_BTN.addClass("btn-light").removeClass("btn-dark");
+            // });
+            // LED_BTN.on("touchend mouseup", function(e) {
+            //     e.preventDefault();
+            //     changePin(23, OFF);
+            //     LED_BTN.addClass("btn-dark").removeClass("btn-light");
+            //});
             // ------ BUTTON CONTROLS ---------
             var all_btns = $('#up_btn, #left_btn, #right_btn, #down_btn');
             all_btns.on("touchend mouseup", function(e) {
@@ -139,6 +151,17 @@
 
             // Set speed to medium on page load
             speed_med();
+
+            // ------ SHOOTER CONTROLS --------------
+            $('#shooter_btn').on("touchstart mousedown", function(e) {
+                e.preventDefault();
+                shoot_on();
+            });
+
+            // $("#shooter_btn").on("touchend mouseup", function(e){
+            //     e.preventDefault();
+            //     shoot_off();
+            // });
             
         })
    </script>
@@ -183,11 +206,11 @@
                         </button>
                     </div>
                     <div class="col">
-                        <!--LED BUTTONS-->
-                        <button id="led" type="button" class="btn btn-block btn-dark">
+                        <!--SHOOTER BUTTONS-->
+                        <button id="shooter_btn" type="button" class="btn btn-block btn-dark">
                             <i class="fa fa-2x fa-bullseye" aria-hidden="true"></i>
                         </button>
-                        <!--LED BUTTONS-->
+                        <!--SHOOTER BUTTONS-->
                     </div>
                     <div class="col">
                         <button id="right_btn" type="button" class="btn btn-primary btn-block">

@@ -111,10 +111,22 @@ def speed_slow():
    drive.set_speed_slow()
    return render_template('main.html')
 
+# Turn shooter on
+@app.route("/shoot_on")
+def shoot_on():
+   drive.shoot_on()
+   return render_template('main.html')
+
+# Turn shooter off
+@app.route("/shoot_off")
+def shoot_off():
+   drive.shoot_off()
+   return render_template('main.html')
+
 if __name__ == "__main__":
    # Email IP address
    print("Mailing IP")
    mail = Emailer()
    mail.send_ip()
    # Start web app
-   app.run(host=ip_address, port=80, debug=True, threaded=True)
+   app.run(host=ip_address, port=80, debug=False, threaded=True)

@@ -56,4 +56,4 @@ with open('/etc/wpa_supplicant/wpa_supplicant.conf','a') as wpa_file:
 os.remove("wifi_details.txt")
 
 # Call autohotspot now that we have new wifi details
-subprocess.call(["sudo", "/usr/bin/autohotspot"])
+subprocess.call(["sudo", "systemctl", "restart", "autohotspot.service"])
